@@ -1,0 +1,1 @@
+# MauryDev.KoGaMa.AvatarAPI
