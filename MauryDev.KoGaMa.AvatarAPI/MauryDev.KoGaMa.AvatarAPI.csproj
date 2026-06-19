@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MauryDev.KoGaMa.ModelAPI" Version="1.0.0" />
+    <PackageReference Include="MauryDev.KoGaMa.ModelAPI" Version="1.0.1" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
   </ItemGroup>
 
