@@ -3,17 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>MauryDev</Authors>
-    <Description>avatar api kogama core</Description>
+    <Description>avatar api kogama kogama-tools</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageTags>kogama avatar api</PackageTags>
-    <PackageIcon>logo.png</PackageIcon>
-    <VersionPrefix>1.0.1</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MauryDev.KoGaMa.ModelAPI" Version="1.0.0" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
+    <PackageReference Include="MauryDev.KoGaMa.ModelAPI.KoGaMaTools" Version="1.0.1" />
+    <PackageReference Include="MessagePack" Version="3.1.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,14 +18,12 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
-    <None Update="logo.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    
     <None Update="README.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <ProjectReference Include="..\MauryDev.KoGaMa.AvatarAPI\MauryDev.KoGaMa.AvatarAPI.csproj" />
   </ItemGroup>
 
 </Project>

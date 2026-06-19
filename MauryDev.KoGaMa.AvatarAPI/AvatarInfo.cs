@@ -1,72 +1,90 @@
 ﻿using MauryDev.KoGaMa.AvatarAPI.Enums;
+using MauryDev.KoGaMa.AvatarAPI.MauryDev.KoGaMa.AvatarAPI.Models;
 using MauryDev.KoGaMa.ModelAPI.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 
 namespace MauryDev.KoGaMa.AvatarAPI
 {
     public class AvatarInfo
     {
-        public ModelInfo[] Parts { get; set; } = new ModelInfo[8];
+        public Dictionary<PartIndex, ModelInfo> Parts { get; set; } = new Dictionary<PartIndex, ModelInfo>();
 
-        public static readonly string[] PartNames = new string[]
-        {
-            "Head", "Torso", "RArm", "LArm", "RUpLeg", "RLowLeg", "LUpLeg", "LLowLeg", "Holster"
-        };
-
-        public static readonly Vector3[] PartBoneSpacePosition = new Vector3[]
-        {
-            new Vector3(0f, -7.7f, -1.5f),
-            new Vector3(0f, -2.8f, -1.5f),
-            new Vector3(0.5f, -7.5f, 2f),
-            new Vector3(0.5f, -7.5f, 2f),
-            new Vector3(-1f, -1.5f, 0f),
-            new Vector3(-1f, -1.5f, 0f),
-            new Vector3(-1f, -1.5f, 0f),
-            new Vector3(-1f, -1.5f, 0f)
-        };
-
-        public static int[] PartConstraintsMinCubes { get; private set; } = new int[]
-        {
-            20, 20, 3, 3, 3, 3, 3, 3
-        };
-        public static float[][] PartConstraintsBoxMin { get; private set; } = new float[][]
-            {
-                new float[] { -4f, 7f, -2f },
-                new float[] { -4f, 2f, -2f },
-                new float[] { -2f, 1f, -3f },
-                new float[] { -2f, 1f, -3f },
-                new float[] { -1f, 0f, -1f },
-                new float[] { -1f, 0f, -1f },
-                new float[] { -1f, 0f, -1f },
-                new float[] { -1f, 0f, -2f }
-            };
-
-        public static float[][] PartConstraintsBoxMax { get; private set; } = new float[][]
-            {
-                new float[] { 3f, 14f, 5f },
-                new float[] { 3f, 8f, 5f },
-                new float[] { 1f, 7f, -2f },
-                new float[] { 1f, 7f, -2f },
-                new float[] { 3f, 2f, 2f },
-                new float[] { 2f, 1f, 2f },
-                new float[] { 3f, 2f, 2f },
-                new float[] { 2f, 1f, 1f }
-            };
-
-        
-
-        public Vector3 GetBonePosition(PartIndex index)
-        {
-            int idx = (int)index;
-            if (idx >= 0 && idx < PartBoneSpacePosition.Length)
-                return PartBoneSpacePosition[idx];
-            return new Vector3(0, 0, 0);
-        }
         public ModelInfo this[PartIndex index]
         {
-            get => this.Parts[(int)index];
+            get => Parts.ContainsKey(index) ? Parts[index] : null;
+            set => Parts[index] = value;
         }
 
-        
+        public PartDefinition GetDefinition(PartIndex index)
+            => AvatarPartRegistry.GetDefinition(index);
+
+        public Vector3 GetBonePosition(PartIndex index)
+            => AvatarPartRegistry.GetDefinition(index).BonePosition;
+
+        public string GetPartName(PartIndex index)
+            => AvatarPartRegistry.GetDefinition(index).Name;
+
+
+
+        public void Equip(PartIndex index, ModelInfo model)
+        {
+            this[index] = model;
+        }
+
+
+        public void Unequip(PartIndex index)
+        {
+            if (Parts.ContainsKey(index))
+            {
+                Parts.Remove(index);
+            }
+        }
+
+        public void ClearAllParts()
+        {
+            Parts.Clear();
+        }
+
+        public bool IsPartEquipped(PartIndex index)
+        {
+            return Parts.ContainsKey(index) && Parts[index] != null;
+        }
+
+
+
+        public bool IsModelValidForPart(PartIndex index, ModelInfo model)
+        {
+            if (model == null) return false;
+
+            var definition = AvatarPartRegistry.GetDefinition(index);
+
+            return true; 
+        }
+
+
+
+    
+        public List<KeyValuePair<PartIndex, ModelInfo>> GetEquippedParts()
+        {
+            return Parts.ToList();
+        }
+
+       
+        public bool IsFullyEquipped()
+        {
+            var requiredParts = new[] { PartIndex.Head, PartIndex.Torso };
+
+            foreach (var part in requiredParts)
+            {
+                if (!IsPartEquipped(part)) return false;
+            }
+            return true;
+        }
+
+        public int EquippedCount => Parts.Count;
+
     }
 }
