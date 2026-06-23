@@ -8,11 +8,11 @@
     <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
     <PackageTags>kogama avatar api</PackageTags>
     <PackageIcon>logo.png</PackageIcon>
-    <VersionPrefix>1.0.1</VersionPrefix>
+    <VersionPrefix>1.0.4</VersionPrefix>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MauryDev.KoGaMa.ModelAPI" Version="1.0.1" />
+    <PackageReference Include="MauryDev.KoGaMa.ModelAPI" Version="1.0.4" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
   </ItemGroup>
 

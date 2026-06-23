@@ -1,7 +1,9 @@
 ﻿using MauryDev.KoGaMa.ModelAPI.KoGaMaTools;
+using MessagePack;
 
 namespace MauryDev.KoGaMa.AvatarAPI.KoGaMaTools.Dtos
 {
+    [MessagePackObject(keyAsPropertyName: true)]
     public class AvatarInfoDTO
     {
         public CubeInfoDTO[] Head { get; set; }
