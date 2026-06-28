@@ -12,6 +12,7 @@ namespace MauryDev.KoGaMa.AvatarAPI
         IEnumerable<IMVModelCube> GetParts();
         IMVModelCube GetPart(string name);
         IMVModelCube GetPart(PartIndex index);
+        int Id { get; }
 
     }
 }
